@@ -4,6 +4,13 @@ import React, { useState } from "react";
 import Content from "./components/Content";
 import HeaderContent from "./components/Controller";
 const App = () => {
+  const [inputs, setInputs] = useState([
+    {
+      title: "",
+      content: "",
+    },
+  ]);
+  const { title, content } = inputs;
   const [work, setWork] = useState([
     {
       id: 0,
@@ -24,17 +31,26 @@ const App = () => {
       isDone: true,
     },
   ]);
-  const [title, setTitle] = useState("");
   const [num, setNum] = useState(3);
-  const [content, setContent] = useState("");
+  const onChange = (e) => {
+    const { value, name } = e.target;
+    setInputs({
+      ...inputs,
+      [name]: value,
+    });
+  };
+
   const addHandler = () => {
+    console.log(inputs);
     setNum(num + 1);
     const newContent = {
       id: num,
-      title: title,
-      content: content,
+      title: inputs["title"],
+      content: inputs["content"],
       isDone: false,
     };
+    console.log(newContent);
+    console.log([...work, newContent]);
     setWork([...work, newContent]);
     console.log(work);
   };
@@ -60,8 +76,7 @@ const App = () => {
     <div className="inner">
       <HeaderContent
         addHandler={addHandler}
-        setTitle={setTitle}
-        setContent={setContent}
+        onChange={onChange}
         title={title}
         content={content}
       />
