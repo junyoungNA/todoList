@@ -1,119 +1,18 @@
 // src/App.js
 import "./App.css";
-import React, { useState } from "react";
-import Content from "./components/Content";
-import HeaderContent from "./components/Controller";
+import Router from "./routes/Router";
+
+// const StxBox = styled.div`
+//   width: 100px;
+//   height: 100px;
+//   border: 1px solid ${({ borderColor }) => borderColor};
+//   margin: 20ox;
+// `;
+
 const App = () => {
-  const [inputs, setInputs] = useState([
-    {
-      title: "",
-      content: "",
-    },
-  ]);
-  const { title, content } = inputs;
-  const [work, setWork] = useState([
-    {
-      id: 0,
-      title: "리액트 공부하기",
-      content: "리액트 기초를 공부해봅시다.",
-      isDone: false,
-    },
-    {
-      id: 1,
-      title: "리액트 공부하기",
-      content: "리액트 기초를 공부해봅시다.",
-      isDone: true,
-    },
-    {
-      id: 2,
-      title: "리액트 공부하기",
-      content: "리액트 기초를 공부해봅시다.",
-      isDone: true,
-    },
-  ]);
-  const [num, setNum] = useState(3);
-  const onChange = (e) => {
-    const { value, name } = e.target;
-    setInputs({
-      ...inputs,
-      [name]: value,
-    });
-  };
-
-  const addHandler = () => {
-    console.log(inputs);
-    setNum(num + 1);
-    const newContent = {
-      id: num,
-      title: inputs["title"],
-      content: inputs["content"],
-      isDone: false,
-    };
-    console.log(newContent);
-    console.log([...work, newContent]);
-    setWork([...work, newContent]);
-    console.log(work);
-  };
-  const deleteContent = (id) => {
-    const newWork = work.filter((ele) => ele.id !== id);
-    setWork(newWork);
-  };
-
-  const doneContent = (id) => {
-    const changeWork = work.find((ele, i) => ele.id === id);
-    const newWork = work.filter((ele, i) => ele.id !== id);
-    changeWork.isDone = true;
-    setWork([...newWork, changeWork]);
-  };
-  const cancleContent = (id) => {
-    const changeDone = work.find((ele, i) => ele.id === id);
-    const newWork = work.filter((ele, i) => ele.id !== id);
-    changeDone.isDone = false;
-    console.log(changeDone);
-    setWork([...newWork, changeDone]);
-  };
   return (
-    <div className="inner">
-      <HeaderContent
-        addHandler={addHandler}
-        onChange={onChange}
-        title={title}
-        content={content}
-      />
-      <div className="content">
-        <h1>Working...</h1>
-        {/* working 부분 */}
-        <div className="working">
-          {work.map((ele, i) => {
-            if (!ele.isDone) {
-              return (
-                <Content
-                  key={ele.id}
-                  deleteHandler={deleteContent}
-                  completeHandler={doneContent}
-                  content={ele}
-                />
-              );
-            }
-          })}
-        </div>
-        {/* Done부분 */}
-        <h1>Done...!</h1>
-        <div className="done">
-          {work.map((ele, i) => {
-            if (ele.isDone) {
-              return (
-                <Content
-                  key={ele.id}
-                  content={ele}
-                  deleteHandler={deleteContent}
-                  completeHandler={cancleContent}
-                />
-              );
-            }
-          })}
-        </div>
-      </div>
+    <div className="App">
+      <Router />
     </div>
   );
 };
