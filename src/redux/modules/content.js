@@ -2,9 +2,8 @@
 // 추가된 코드 👇 - 액션 value를 상수들로 만들어 줍니다. 보통 이렇게 한곳에 모여있습니다.
 const CONTENT_INSERT = "CONTENT_INSERT";
 const CONTENT_DELETE = "CONTENT_DELETE";
-const CONTENT_DONE = "CONTENT_DONE";
-const CONTENT_CANCLE = "CONTENT_CANCLE";
 const CONTENT_MODIFY = "CONTENT_MODIFY";
+const CONTENT_COMPLETE = "CONTENT_COMPLETE";
 export const contentInsert = (payload) => {
   // console.log(payload);
   return {
@@ -20,18 +19,10 @@ export const contentDelete = (payload) => {
   };
 };
 
-export const contentDone = (payload) => {
+export const contentComplete = (payload) => {
   // console.log(payload);
   return {
-    type: CONTENT_DONE,
-    payload,
-  };
-};
-
-export const contentCancle = (payload) => {
-  // console.log(payload);
-  return {
-    type: CONTENT_CANCLE,
+    type: CONTENT_COMPLETE,
     payload,
   };
 };
@@ -68,46 +59,34 @@ const initialState = [
   },
 ];
 
+function contentHandler(state, id) {
+  const copy = [...state];
+  const result = copy.findIndex((ele) => ele.id === id);
+  return { copy: copy, index: result };
+}
+
 // 리듀서
 const content = (state = initialState, action) => {
-  // console.log(action.payload);
   switch (action.type) {
     case CONTENT_INSERT: {
       return [...state, action.payload];
     }
     case CONTENT_DELETE: {
-      //원본데이터로 filter하고 splice시 비동기 처리됨??
-      //findIndex를 사용해서 splice를 이용할지
-      //filter를 사용할지 추천해주세으
-      //filter 빠를듯!
-      //원본 배열의 데이터를 변경시킬려고 하면
-      //리액트는 화면을 재랜더링 시켜주지않음!
-      const copy = [...state];
-      const result = copy.findIndex((ele) => ele.id === action.payload);
-      if (result === -1) return;
-      copy.splice(result, 1);
+      const { copy, index } = contentHandler(state, action.payload);
+      if (index === -1) return;
+      copy.splice(index, 1);
       return copy;
     }
-    case CONTENT_DONE: {
-      const copy = [...state];
-      const result = copy.findIndex((ele) => ele.id === action.payload);
-      if (result === -1) return;
-      copy[result].isDone = true;
-      return copy;
-    }
-
-    case CONTENT_CANCLE: {
-      const copy = [...state];
-      const result = copy.findIndex((ele) => ele.id === action.payload);
-      if (result === -1) return;
-      copy[result].isDone = false;
+    case CONTENT_COMPLETE: {
+      const { copy, index } = contentHandler(state, action.payload);
+      if (index === -1) return;
+      copy[index].isDone = !copy[index].isDone;
       return copy;
     }
     case CONTENT_MODIFY: {
-      const copy = [...state];
-      const result = copy.findIndex((ele) => ele.id === action.payload.id);
-      if (result === undefined) return;
-      copy[result] = {
+      const { copy, index } = contentHandler(state, action.payload);
+      if (index === -1) return;
+      copy[index] = {
         ...action.payload,
       };
       return copy;

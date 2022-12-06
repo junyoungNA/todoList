@@ -4,8 +4,7 @@ import Layout from "../components/layout/Layout";
 import {
   contentInsert,
   contentDelete,
-  contentCancle,
-  contentDone,
+  contentComplete,
   // contentModify, //수정기능은 detail페이지에서 리듀서요청
 } from "../redux/modules/content";
 
@@ -51,11 +50,8 @@ const Main = () => {
       case "delete":
         dispatch(contentDelete(id));
         break;
-      case "done":
-        dispatch(contentDone(id));
-        break;
-      case "cancle":
-        dispatch(contentCancle(id));
+      case "complete":
+        dispatch(contentComplete(id));
         break;
       default:
         return;

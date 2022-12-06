@@ -25,14 +25,14 @@ const Content = ({ completeHandler, content }) => {
         {content.isDone ? (
           <button
             className="done_Btn"
-            onClick={completeHandler("cancle", content.id)}
+            onClick={completeHandler("complete", content.id)}
           >
             취소하기
           </button>
         ) : (
           <button
             className="done_Btn"
-            onClick={completeHandler("done", content.id)}
+            onClick={completeHandler("complete", content.id)}
           >
             완료
           </button>
