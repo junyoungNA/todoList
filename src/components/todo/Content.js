@@ -1,11 +1,13 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import "./style.css";
 
-const Content = ({ deleteHandler, completeHandler, content }) => {
+const Content = ({ completeHandler, content }) => {
   const navigate = useNavigate();
-
   const goDetail = (content) => () => {
     navigate("/detail", { state: content });
   };
+
   return (
     <div className="todo">
       <h4 className="link" onClick={goDetail({ content })}>
@@ -16,27 +18,21 @@ const Content = ({ deleteHandler, completeHandler, content }) => {
       <div className="btn">
         <button
           className="delete_Btn"
-          onClick={() => {
-            deleteHandler(content.id);
-          }}
+          onClick={completeHandler("delete", content.id)}
         >
           삭제하기
         </button>
         {content.isDone ? (
           <button
             className="done_Btn"
-            onClick={() => {
-              completeHandler(content.id);
-            }}
+            onClick={completeHandler("cancle", content.id)}
           >
             취소하기
           </button>
         ) : (
           <button
             className="done_Btn"
-            onClick={() => {
-              completeHandler(content.id);
-            }}
+            onClick={completeHandler("done", content.id)}
           >
             완료
           </button>

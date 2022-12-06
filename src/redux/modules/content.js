@@ -4,9 +4,9 @@ const CONTENT_INSERT = "CONTENT_INSERT";
 const CONTENT_DELETE = "CONTENT_DELETE";
 const CONTENT_DONE = "CONTENT_DONE";
 const CONTENT_CANCLE = "CONTENT_CANCLE";
-
+const CONTENT_MODIFY = "CONTENT_MODIFY";
 export const contentInsert = (payload) => {
-  console.log(payload);
+  // console.log(payload);
   return {
     type: CONTENT_INSERT,
     payload,
@@ -14,7 +14,6 @@ export const contentInsert = (payload) => {
 };
 
 export const contentDelete = (payload) => {
-  console.log(payload);
   return {
     type: CONTENT_DELETE,
     payload,
@@ -22,7 +21,7 @@ export const contentDelete = (payload) => {
 };
 
 export const contentDone = (payload) => {
-  console.log(payload);
+  // console.log(payload);
   return {
     type: CONTENT_DONE,
     payload,
@@ -30,9 +29,17 @@ export const contentDone = (payload) => {
 };
 
 export const contentCancle = (payload) => {
-  console.log(payload);
+  // console.log(payload);
   return {
     type: CONTENT_CANCLE,
+    payload,
+  };
+};
+
+export const contentModify = (payload) => {
+  // console.log(payload);
+  return {
+    type: CONTENT_MODIFY,
     payload,
   };
 };
@@ -72,6 +79,9 @@ const content = (state = initialState, action) => {
       //원본데이터로 filter하고 splice시 비동기 처리됨??
       //findIndex를 사용해서 splice를 이용할지
       //filter를 사용할지 추천해주세으
+      //filter 빠를듯!
+      //원본 배열의 데이터를 변경시킬려고 하면
+      //리액트는 화면을 재랜더링 시켜주지않음!
       const copy = [...state];
       const result = copy.findIndex((ele) => ele.id === action.payload);
       if (result === -1) return;
@@ -91,6 +101,15 @@ const content = (state = initialState, action) => {
       const result = copy.findIndex((ele) => ele.id === action.payload);
       if (result === -1) return;
       copy[result].isDone = false;
+      return copy;
+    }
+    case CONTENT_MODIFY: {
+      const copy = [...state];
+      const result = copy.findIndex((ele) => ele.id === action.payload.id);
+      if (result === undefined) return;
+      copy[result] = {
+        ...action.payload,
+      };
       return copy;
     }
     default:

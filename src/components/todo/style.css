@@ -1,0 +1,51 @@
+.todo {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin-left: 20px;
+    width: 320px;
+    height: 240px;
+    border: 5px solid teal;
+    border-radius: 15px;
+    position: relative;
+  }
+  
+  .todo:first-child {
+    margin-left: 0;
+  }
+  .todo > h2,
+  .todo > p {
+    margin-top: 20px;
+    margin-left: 20px;
+  }
+  .todo > .btn {
+    display: flex;
+    justify-content: center;
+  }
+  .todo > .btn  button {
+    cursor: pointer;
+    width: 120px;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 30px 10px 0px 10px;
+    background-color: white;
+  }
+  
+  .todo .btn .delete_Btn {
+    border: 3px solid rgb(209, 70, 70);
+  }
+  .todo .btn .done_Btn {
+    border: 3px solid green;
+  }
+
+  .link {
+    margin-left: 20px;
+    margin: 0 0 0 20px;
+    cursor: pointer;
+  }
+  .link:hover {
+    color: rgb(113, 204, 204)
+  }

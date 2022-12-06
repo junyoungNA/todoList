@@ -1,0 +1,6 @@
+.inner > .content > .done,
+.inner > .content > .working {
+  display: flex;
+  height: 300px;
+  width: 1200px;
+}

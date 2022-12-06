@@ -1,0 +1,40 @@
+input {
+    width: 250px;
+    height: 30px;
+    border: none;
+    border-radius: 6px;
+    margin: 10px;
+  }
+
+.header {
+    background-color: rgb(238, 233, 233);
+    width: 1200px;
+    height: 150px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+}
+  .header > .create {
+    flex: 1;
+    height: 50px;
+    font-size: 23px;
+    font-weight: 700;
+    float:right;
+  }
+  .header > .create > label {
+    margin-left: 40px;
+  }
+  
+  .header > .add {
+    cursor: pointer;
+    text-align: center;
+    border: none;
+    background-color: teal;
+    color: white;
+    height: 40px;
+    width: 180px;
+    font-size: 20px;
+    font-weight: 600;
+    margin-right: 50px;
+    border-radius: 15px;
+  }

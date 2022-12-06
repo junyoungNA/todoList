@@ -1,18 +1,19 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import HeaderContent from "../components/Controller";
-import Content from "../components/Content";
+import Layout from "../components/layout/Layout";
 import {
   contentInsert,
   contentDelete,
   contentCancle,
   contentDone,
+  // contentModify, //수정기능은 detail페이지에서 리듀서요청
 } from "../redux/modules/content";
 
 const Main = () => {
   const contents = useSelector((state) => state.content);
   const [num, setNum] = useState(3);
   const dispatch = useDispatch();
+
   const [inputs, setInputs] = useState([
     {
       title: "",
@@ -31,6 +32,7 @@ const Main = () => {
   };
 
   const contentHandler = (name, id) => () => {
+    //if문으로 사용하는 경우도 많다!
     switch (name) {
       case "add":
         setNum(num + 1);
@@ -45,6 +47,7 @@ const Main = () => {
           title: "",
           content: "",
         });
+        break;
       case "delete":
         dispatch(contentDelete(id));
         break;
@@ -58,49 +61,16 @@ const Main = () => {
         return;
     }
   };
+
   return (
-    <div className="inner">
-      <HeaderContent
-        addHandler={contentHandler("add")}
-        onChange={onChange}
-        title={title}
-        content={content}
-      />
-      <div className="content">
-        <h1>Working...</h1>
-        {/* working 부분 */}
-        <div className="working">
-          {contents.map((ele, i) => {
-            if (!ele.isDone) {
-              return (
-                <Content
-                  key={ele.id}
-                  deleteHandler={contentHandler("delete", ele.id)}
-                  completeHandler={contentHandler("done", ele.id)}
-                  content={ele}
-                />
-              );
-            }
-          })}
-        </div>
-        {/* Done부분 */}
-        <h1>Done...!</h1>
-        <div className="done">
-          {contents.map((ele, i) => {
-            if (ele.isDone) {
-              return (
-                <Content
-                  key={ele.id}
-                  content={ele}
-                  deleteHandler={contentHandler("delete", ele.id)}
-                  completeHandler={contentHandler("cancle", ele.id)}
-                />
-              );
-            }
-          })}
-        </div>
-      </div>
-    </div>
+    <Layout
+      addHandler={contentHandler("add")}
+      onChange={onChange}
+      title={title}
+      content={content}
+      contents={contents}
+      contentHandler={contentHandler}
+    />
   );
 };
 
