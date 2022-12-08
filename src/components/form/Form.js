@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 const Form = ({ eventChange, title, content, addHandler }) => {
   return (
     <>
@@ -24,4 +26,4 @@ const Form = ({ eventChange, title, content, addHandler }) => {
   );
 };
 
-export default Form;
+export default memo(Form);

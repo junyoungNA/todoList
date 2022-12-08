@@ -4,6 +4,7 @@ const CONTENT_INSERT = "CONTENT_INSERT";
 const CONTENT_DELETE = "CONTENT_DELETE";
 const CONTENT_MODIFY = "CONTENT_MODIFY";
 const CONTENT_COMPLETE = "CONTENT_COMPLETE";
+
 export const contentInsert = (payload) => {
   // console.log(payload);
   return {
@@ -84,7 +85,7 @@ const content = (state = initialState, action) => {
       return copy;
     }
     case CONTENT_MODIFY: {
-      const { copy, index } = contentHandler(state, action.payload);
+      const { copy, index } = contentHandler(state, action.payload.id);
       if (index === -1) return;
       copy[index] = {
         ...action.payload,

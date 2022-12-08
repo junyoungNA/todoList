@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Layout from "../components/layout/Layout";
 import {
@@ -13,14 +13,13 @@ const Main = () => {
   const [num, setNum] = useState(3);
   const dispatch = useDispatch();
 
-  const [inputs, setInputs] = useState([
-    {
-      title: "",
-      content: "",
-    },
-  ]);
+  const [inputs, setInputs] = useState({
+    title: "",
+    content: "",
+  });
 
   const { title, content } = inputs;
+  //인풋두개는 성능의 차이가 거의 없음!
 
   const onChange = (e) => {
     const { value, name } = e.target;

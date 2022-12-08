@@ -52,6 +52,7 @@ const Detail = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const { content } = state;
+
   const [inputs, setInputs] = useState({
     title: content.title,
     text: content.content,
@@ -66,6 +67,7 @@ const Detail = () => {
       [name]: value,
     });
   };
+
   const modifyContent = (id) => () => {
     if (!window.confirm("해당 글을 수정하시겠습니까?")) return;
     const payload = {
